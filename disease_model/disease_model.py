@@ -1,4 +1,5 @@
 import random
+from unittest import installHandler
 
 from mesa import Agent, Model
 from mesa.datacollection import DataCollector
@@ -23,3 +24,12 @@ class Person_Agent(Agent):
         possible_steps = self.model.grid.get_neighbourhood(self.pos,moore=True,include_center=False)
         new_position = random.choice(possible_steps)
         self.model.grid.move_agent(self,new_position)
+
+    def infect(self):
+        cellmates = self.model.grid.get_cell_list_contents([self.pos])
+        if(len(cellmates) > 1):
+            for inhabitant in cellmates:
+                if inhabitant.infected == False:
+                    if(random.uniform(0,1)<self.transmissibility):
+                        inhabitant.infected = True
+                        inhabitant.disease_duration = int(round(random.expovariate(1.0/self.mean_length_of_disease),0))
