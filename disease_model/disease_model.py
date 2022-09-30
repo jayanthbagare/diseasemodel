@@ -48,6 +48,7 @@ class Disease_Model(Model):
         self.num_agents = N
         self.grid = MultiGrid(width,height,True)
         self.schedule = RandomActivation(self)
+        
 
         for i in range(self.num_agents):
             a = Person_Agent(i,self,initial_infection,transmissibility,level_of_movement,mean_length_of_disease)
@@ -60,6 +61,17 @@ class Disease_Model(Model):
                     x = random.randrange(self.grid.width)
                     y = random.randrange(self.grid.height)
                     self.grid.place_agent(a,(x,y))
+
+        self.datacollector = DataCollector(model_reporters={"Total_Infected":calculate_number_infected},agent_reporters={})
     
     def step(self):
         self.schedule.step()
+        self.datacollector.collect(self)
+
+def calculate_number_infected(model):
+    count = 0
+    agents = model.schedule.agents
+    for a in agents:
+        if(a.infected == True):
+            count += 1
+    return count
