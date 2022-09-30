@@ -25,4 +25,4 @@ level_of_movement_slider = Slider('Level of Movement',0.5,0.01,1,0.01)
 mean_length_of_disease_slider = Slider('Mean Length of Disease in days',10,1,100,1)
 total_infected_graph = ChartModule([{"Label":"Total_Infected","Color":"Red"}],data_collector_name='datacollector')
 
-server = ModularServer(Disease_Model,[grid,total_infected_graph],"Disease Spread Model",{"N":num_of_agents_slider,"width":10,"height":10,"initial_infection":initial_infection_slider,"transmissibility":transmissibility_slider,"level_of_movement":level_of_movement_slider,"mean_length_of_disease":mean_length_of_disease_slider})
+server = ModularServer(Disease_Model,[grid,total_infected_graph ],"Disease Spread Model",{"N":num_of_agents_slider,"width":10,"height":10,"initial_infection":initial_infection_slider,"transmissibility":transmissibility_slider,"level_of_movement":level_of_movement_slider,"mean_length_of_disease":mean_length_of_disease_slider})
